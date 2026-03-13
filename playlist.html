@@ -6,43 +6,50 @@
     <title>Playlist | Rádio Sebastián</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root { --primary: #00f2ff; --secondary: #7000ff; --bg: #0a0e17; --card: #161b26; --text: #ffffff; }
-        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
-        nav { background: #111827; padding: 15px; display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--primary); }
-        nav a { color: white; text-decoration: none; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; transition: 0.3s; padding: 5px 10px; }
-        nav a:hover { color: var(--primary); }
-        nav a[href="playlist.html"] { color: var(--primary); border-bottom: 2px solid var(--primary); }
-        
-        .main-container { max-width: 600px; margin: 20px auto; padding: 15px; }
-        .now-playing-card { background: linear-gradient(135deg, #1a1f2c 0%, #0a0e17 100%); border: 2px solid var(--primary); border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px; }
-        .scroll-area { max-height: 500px; overflow-y: auto; background: var(--card); border-radius: 15px; }
-        .track-item { border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
-        .track-item.active { background: rgba(0, 242, 255, 0.2); border-left: 4px solid var(--primary); }
-        .track-link { text-decoration: none; display: flex; align-items: center; padding: 15px; color: inherit; }
-        .live-dot { height: 8px; width: 8px; background: #ff0055; border-radius: 50%; display: inline-block; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0.3; } }
+        :root { --primary: #00f2ff; --bg: #0a0e17; --card: #161b26; --text: #ffffff; --nav-bg: #111827; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+        .navbar { width: 100%; background: var(--nav-bg); padding: 15px 0; display: flex; justify-content: center; gap: 25px; border-bottom: 2px solid var(--primary); position: sticky; top: 0; }
+        .navbar a { color: white; text-decoration: none; text-transform: uppercase; font-weight: 800; font-size: 0.9rem; }
+        .navbar a.active { color: var(--primary); }
+
+        .container { max-width: 600px; margin: 30px auto; padding: 0 15px; }
+        .now-playing { background: var(--card); border: 2px solid var(--primary); padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 20px; }
+        .track-item { background: var(--card); margin-bottom: 5px; padding: 15px; border-radius: 10px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.05); }
+        .track-item.active { border-color: var(--primary); background: rgba(0, 242, 255, 0.1); }
+        .play-icon { color: var(--primary); margin-right: 15px; }
     </style>
 </head>
 <body>
-    <nav>
+    <nav class="navbar">
         <a href="index.html">Domov</a>
+        <a href="playlist.html" class="active">Playlist</a>
         <a href="o-nas.html">O nás</a>
-        <a href="playlist.html">Playlist</a>
     </nav>
 
-    <div class="main-container">
-        <div class="now-playing-card">
-            <span style="font-size: 0.7rem; color: var(--primary); letter-spacing: 2px;"><span class="live-dot"></span> PRÁVE HRÁME</span>
-            <div id="current-track-title" style="font-size: 1.2rem; font-weight: bold; margin-top: 10px;">Načítavam...</div>
+    <div class="container">
+        <div class="now-playing">
+            <small style="color:var(--primary)">PRÁVĚ HRAJE</small>
+            <h2 id="current">Rádio Sebastián</h2>
         </div>
-
-        <div class="scroll-area" id="playlist-box">
-             <div class="track-item"><a class="track-link" href="#"><span class="song-title">Jax Jones - You Don't Know Me</span></a></div>
-             </div>
+        <div id="playlist">
+            <div class="track-item"><i class="fas fa-play play-icon"></i><span>Jax Jones - You Don't Know Me</span></div>
+            <div class="track-item"><i class="fas fa-play play-icon"></i><span>Kaoma - Lambada</span></div>
+            <div class="track-item"><i class="fas fa-play play-icon"></i><span>ACDC - Thunderstruck</span></div>
+            </div>
     </div>
 
     <script>
-        // ... sem vlož ten script pro Zeno.fm a zvýrazňování, co už máš ...
+        const es = new EventSource("https://api.zeno.fm/mounts/metadata/subscribe/ueoubhhgiortv");
+        es.onmessage = (e) => {
+            const data = JSON.parse(e.data);
+            const title = data.streamTitle || "Rádio Sebastián";
+            document.getElementById('current').innerText = title;
+            // Zvýraznění v seznamu
+            document.querySelectorAll('.track-item').forEach(item => {
+                if(title.toLowerCase().includes(item.innerText.toLowerCase())) item.classList.add('active');
+                else item.classList.remove('active');
+            });
+        };
     </script>
 </body>
 </html>
