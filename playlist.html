@@ -6,228 +6,43 @@
     <title>Playlist | Rádio Sebastián</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary: #00f2ff;
-            --secondary: #7000ff;
-            --bg: #0a0e17;
-            --card: #161b26;
-            --text: #ffffff;
-            --accent: #ff0055;
-        }
-
-        body { 
-            margin: 0; 
-            padding: 10px; 
-            font-family: 'Inter', sans-serif; 
-            background: var(--bg); 
-            color: var(--text); 
-            overflow-x: hidden;
-        }
-
-        .main-container { 
-            max-width: 600px; 
-            margin: 0 auto; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px; 
-            padding-bottom: 80px; 
-        }
-
-        /* Navigácia späť */
-        .back-nav {
-            margin-bottom: 5px;
-        }
-        .back-nav a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* HORNÝ PANEL - PRÁVE HRÁ */
-        .now-playing-card {
-            background: linear-gradient(135deg, #1a1f2c 0%, #0a0e17 100%);
-            border: 2px solid var(--primary);
-            border-radius: 15px; padding: 20px; text-align: center;
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
-        }
-        .now-playing-label { color: var(--primary); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; font-weight: bold; display: block; margin-bottom: 8px; }
-        #current-track-title { font-size: 1.3rem; font-weight: 700; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
-        .live-dot { height: 8px; width: 8px; background-color: var(--accent); border-radius: 50%; display: inline-block; margin-right: 8px; animation: blink 1s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-        /* PLAYLIST SEKCE */
-        .playlist-container { background: var(--card); border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; }
-        .playlist-header { padding: 12px; background: var(--secondary); display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; }
+        :root { --primary: #00f2ff; --secondary: #7000ff; --bg: #0a0e17; --card: #161b26; --text: #ffffff; }
+        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+        nav { background: #111827; padding: 15px; display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--primary); }
+        nav a { color: white; text-decoration: none; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; transition: 0.3s; padding: 5px 10px; }
+        nav a:hover { color: var(--primary); }
+        nav a[href="playlist.html"] { color: var(--primary); border-bottom: 2px solid var(--primary); }
         
-        .scroll-area { max-height: 450px; overflow-y: auto; scroll-behavior: smooth; }
-        .scroll-area::-webkit-scrollbar { width: 5px; }
-        .scroll-area::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-        
+        .main-container { max-width: 600px; margin: 20px auto; padding: 15px; }
+        .now-playing-card { background: linear-gradient(135deg, #1a1f2c 0%, #0a0e17 100%); border: 2px solid var(--primary); border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px; }
+        .scroll-area { max-height: 500px; overflow-y: auto; background: var(--card); border-radius: 15px; }
         .track-item { border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
-        .track-item.active { background: rgba(0, 242, 255, 0.15); border-left: 4px solid var(--primary); }
-        .track-link { text-decoration: none; display: flex; align-items: center; padding: 15px 20px; color: inherit; }
-        .play-icon { color: var(--primary); margin-right: 15px; font-size: 1.1rem; }
-        .song-title { font-size: 1rem; font-weight: 500; }
-
-        /* FOOTER */
-        .footer-card {
-            background: var(--card); 
-            border-radius: 15px; 
-            padding: 30px 15px;
-            border: 1px solid rgba(255,255,255,0.1); 
-            text-align: center;
-        }
-        .footer-label { font-weight: bold; color: var(--primary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
-        .social-icons { display: flex; justify-content: center; margin-bottom: 20px; }
-        .social-icons a { color: var(--text); font-size: 2.5rem; transition: 0.3s; text-decoration: none; }
-        .social-icons a:hover { color: var(--primary); transform: scale(1.1); }
-        .created-by { margin-bottom: 15px; font-size: 0.95rem; color: #fff; }
-        .created-by a { color: var(--primary); text-decoration: none; font-weight: bold; border-bottom: 1px solid transparent; transition: 0.3s; }
-        .created-by a:hover { border-bottom: 1px solid var(--primary); }
-        .copyright { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; }
+        .track-item.active { background: rgba(0, 242, 255, 0.2); border-left: 4px solid var(--primary); }
+        .track-link { text-decoration: none; display: flex; align-items: center; padding: 15px; color: inherit; }
+        .live-dot { height: 8px; width: 8px; background: #ff0055; border-radius: 50%; display: inline-block; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
+    <nav>
+        <a href="index.html">Domov</a>
+        <a href="o-nas.html">O nás</a>
+        <a href="playlist.html">Playlist</a>
+    </nav>
 
-<div class="main-container">
-    <div class="back-nav">
-        <a href="index.html"><i class="fas fa-arrow-left"></i> Späť domov</a>
-    </div>
+    <div class="main-container">
+        <div class="now-playing-card">
+            <span style="font-size: 0.7rem; color: var(--primary); letter-spacing: 2px;"><span class="live-dot"></span> PRÁVE HRÁME</span>
+            <div id="current-track-title" style="font-size: 1.2rem; font-weight: bold; margin-top: 10px;">Načítavam...</div>
+        </div>
 
-    <div class="now-playing-card">
-        <span class="now-playing-label"><span class="live-dot"></span> Práve vysielame</span>
-        <span id="current-track-title">Načítavam...</span>
-    </div>
-
-    <div class="playlist-container">
-        <div class="playlist-header"><i class="fas fa-list-ul"></i> Kompletný Playlist</div>
         <div class="scroll-area" id="playlist-box">
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Jax+Jones+-+You+Don%27t+Know+Me" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Jax Jones - You Don't Know Me ft. RAYE</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Kaoma+-+Lambada" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Kaoma - Lambada</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=ACDC+-+Thunderstruck" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">ACDC - Thunderstruck</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=DJ+Antoine+-+Bella+Vita" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">DJ Antoine - Bella Vita</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Jonas+Brothers+-+No+Time+To+Talk" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Jonas Brothers - No Time To Talk</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Black+Eyed+Peas%2C+Shakira+-+Girl+Like+Me" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Black Eyed Peas, Shakira - Girl Like Me</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Alex+Warren+-+Ordinary" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Alex Warren - Ordinary</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=2+Unlimited+-+No+Limit" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">2 Unlimited - No Limit</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=HEX+-+Nikdy+nebolo+lepšie" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">HEX - Nikdy nebolo lepšie</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Mark+Dann+-+Let+me+die+feat.+Giovanni+Ricci" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Mark Dann - Let me die ft. Giovanni Ricci</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Harry+Styles+-+Watermelon+Sugar" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Harry Styles - Watermelon Sugar</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Martin+Solveig+%26+GTA+-+Intoxicated" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Martin Solveig & GTA - Intoxicated</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Michal+David+-+Nonstop" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Michal David - Nonstop</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Akon+-+Lonely" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Akon - Lonely</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=BL3SS+x+CamrinWatsin+-+Kisses+ft.+bbyclose" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">BL3SS x CamrinWatsin - Kisses ft. bbyclose</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Tyler%2C+The+Creator+-+SUGAR+ON+MY+TONGUE" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Tyler, The Creator - SUGAR ON MY TONGUE</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Nico+Santos+-+Number+1" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Nico Santos - Number 1</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Sia+-+Move+Your+Body" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Sia - Move Your Body</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Imagine+Dragons+-+Eyes+Closed" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Imagine Dragons - Eyes Closed</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=girl+in+red+-+we+fell+in+love+in+october" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">girl in red - we fell in love in october</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Barbora+Švidraňová+-+SPRIAZNENÍ+feat.+Lukáš+Adamec" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Barbora Švidraňová - SPRIAZNENÍ ft. Lukáš Adamec</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Neil+Diamond+-+Sweet+Caroline" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Neil Diamond - Sweet Caroline</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Bruno+Mars+-+Runaway+Baby" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Bruno Mars - Runaway Baby</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Sia+-+Unstoppable" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Sia - Unstoppable</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Alec+Benjamin+-+Let+Me+Down+Slowly" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Alec Benjamin - Let Me Down Slowly</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=The+Rolling+Stones+-+Paint+It%2C+Black" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">The Rolling Stones - Paint It, Black</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Earth%2C+Wind+%26+Fire+-+September" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Earth, Wind & Fire - September</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Karel+Gott+%26+Charlotte+Ella+Gottová+-+Srdce+nehasnou" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Karel Gott & Charlotte Ella - Srdce nehasnou</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Daft+Punk+-+One+More+Time" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Daft Punk - One More Time</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Justin+Timberlake+-+SexyBack" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Justin Timberlake - SexyBack ft. Timbaland</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Icona+Pop+%26+Charli+XCX+-+I+Love+It" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Icona Pop & Charli XCX - I Love It</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Doja+Cat+-+Paint+The+Town+Red" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Doja Cat - Paint The Town Red</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Ed+Sheeran+-+Perfect" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Ed Sheeran - Perfect</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Numerous+Bootings+%28Bro+in+a+Coffee+Shop%29" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Numerous Bootings (Bro in a Coffee Shop)</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Adam+Ďurica+-+Zatancuj+si+so+mnou" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Adam Ďurica - Zatancuj si so mnou</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Kim+Larsen+-+Tarzan+Mama+Mia" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Kim Larsen - Tarzan Mama Mia</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=The+Outfield+-+Your+Love" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">The Outfield - Your Love</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Danzel+-+Pump+It+Up%21" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Danzel - Pump It Up!</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Nico+Santos+-+Would+I+Lie+To+You" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Nico Santos - Would I Lie To You</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=L2K+-+Jerusalema" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">L2K - Jerusalema</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Alvaro+Soler+-+Regalo" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Alvaro Soler - Regalo</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Gracie+Abrams+-+Thats+So+True" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Gracie Abrams - Thats So True</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Queen+-+Bohemian+Rhapsody" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Queen - Bohemian Rhapsody</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Alan+Murin+-+Domov" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Alan Murin - Domov</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=DJ+Antoine+%26+The+Beat+Shakers+-+Ma+Chérie" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">DJ Antoine & Beat Shakers - Ma Chérie</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Connor+Price+%26+Haviah+Mighty+-+Trendsetter" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Connor Price & Haviah Mighty - Trendsetter</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Madonna+-+4+Minutes" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Madonna - 4 Minutes</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Jack+Harlow+-+Lovin+On+Me" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Jack Harlow - Lovin On Me</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Cloonee%2C+Young+M.A+%26+InntRaw+-+Stephanie" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Cloonee, Young M.A & InntRaw - Stephanie</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Dua+Lipa+-+New+Rules" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Dua Lipa - New Rules</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Ray+Charles+-+Hit+The+Road+Jack" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Ray Charles - Hit The Road Jack</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Bomfunk+MC%27s+-+Freestyler" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Bomfunk MC's - Freestyler</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=ROSE+%26+Bruno+Mars+-+APT." target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">ROSE & Bruno Mars - APT.</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Robin+Schulz+x+FAST+BOY+-+Million+Good+Reasons" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Robin Schulz x FAST BOY - Million Reasons</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Daddy+Yankee+-+Limbo" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Daddy Yankee - Limbo</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Justin+Timberlake+-+CAN%27T+STOP+THE+FEELING%21" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Justin Timberlake - CAN'T STOP THE FEELING!</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Modjo+-+Lady+%28Hear+me+Tonight%29" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Modjo - Lady (Hear me Tonight)</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Darude+-+Sandstorm" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Darude - Sandstorm</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Village+People+-+YMCA" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Village People - YMCA</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Shaboozey%2C+Myles+Smith+-+Blink+Twice" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Shaboozey, Myles Smith - Blink Twice</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=BLACKPINK+-+뛰어%28JUMP%29" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">BLACKPINK - 뛰어(JUMP)</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Ed+Sheeran+-+Azizam" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Ed Sheeran - Azizam</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=WALK+THE+MOON+-+Shut+Up+and+Dance" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">WALK THE MOON - Shut Up and Dance</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=EGO+%26+ROBERT+BURIAN+-+Žijeme+len+raz" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">EGO & ROBERT BURIAN - Žijeme len raz</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Imagine+Dragons+-+Whatever+It+Takes" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Imagine Dragons - Whatever It Takes</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Simon+%26+Garfunkel+-+The+Sound+of+Silence" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Simon & Garfunkel - Sound of Silence</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Yousay+-+Leporelo" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Yousay - Leporelo</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=KALI+A+PETER+PANN+-+Užívam+si+to" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">KALI A PETER PANN - Užívam si to</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Barbra+Streisand+-+Woman+in+Love" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Barbra Streisand - Woman in Love</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Rita+Ora+-+Anywhere" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Rita Ora - Anywhere</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Where+is+my+husband" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Where is my husband?</span></a></div>
-            <div class="track-item"><a class="track-link" href="https://www.youtube.com/results?search_query=Giana+Giana+Italiano" target="_blank"><i class="fas fa-play play-icon"></i><span class="song-title">Giana Giana Italiano</span></a></div>
-        </div>
+             <div class="track-item"><a class="track-link" href="#"><span class="song-title">Jax Jones - You Don't Know Me</span></a></div>
+             </div>
     </div>
 
-    <div class="footer-card">
-        <div class="footer-label">Sledujte nás</div>
-        <div class="social-icons">
-            <a href="https://www.instagram.com/radiosebastian_sk" target="_blank"><i class="fab fa-instagram"></i></a>
-        </div>
-        
-        <div class="created-by">
-            Tento web vytvoril <a href="https://sites.google.com/view/martin-weby/web" target="_blank">Martin</a>
-        </div>
-
-        <div class="copyright">© 2026 Rádio Sebastián • Všetky práva vyhradené</div>
-    </div>
-</div>
-
-<script>
-    const metadataUrl = "https://api.zeno.fm/mounts/metadata/subscribe/ueoubhhgiortv";
-    const statusDisplay = document.getElementById('current-track-title');
-    
-    function initZeno() {
-        const es = new EventSource(metadataUrl);
-        es.onmessage = (e) => {
-            try {
-                const data = JSON.parse(e.data);
-                const title = data.streamTitle || "Rádio Sebastián";
-                statusDisplay.innerText = title;
-                highlightInPlaylist(title);
-            } catch (err) {}
-        };
-        es.onerror = () => { es.close(); setTimeout(initZeno, 5000); };
-    }
-
-    function highlightInPlaylist(nowPlaying) {
-        const items = document.querySelectorAll('.track-item');
-        const searchTitle = nowPlaying.toLowerCase();
-        items.forEach(item => {
-            const songName = item.querySelector('.song-title').innerText.toLowerCase();
-            // Upravená logika pre presnejšie vyhľadávanie
-            if (searchTitle.includes(songName) || songName.includes(searchTitle)) {
-                item.classList.add('active');
-                item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            } else { 
-                item.classList.remove('active'); 
-            }
-        });
-    }
-    initZeno();
-</script>
-
+    <script>
+        // ... sem vlož ten script pro Zeno.fm a zvýrazňování, co už máš ...
+    </script>
 </body>
 </html>
