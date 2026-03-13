@@ -6,36 +6,32 @@
     <title>O nás | Rádio Sebastián</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root { --primary: #00f2ff; --bg: #0a0e17; --card: #161b26; --text: #ffffff; }
-        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
-        nav { background: #111827; padding: 15px; display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--primary); }
-        nav a { color: white; text-decoration: none; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; transition: 0.3s; padding: 5px 10px; }
-        nav a:hover { color: var(--primary); }
-        nav a[href="o-nas.html"] { color: var(--primary); border-bottom: 2px solid var(--primary); }
-        .container { max-width: 800px; margin: 40px auto; padding: 20px; }
-        .post-card { background: var(--card); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0, 242, 255, 0.2); }
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        :root { --primary: #00f2ff; --bg: #0a0e17; --card: #161b26; --text: #ffffff; --nav-bg: #111827; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+        .navbar { width: 100%; background: var(--nav-bg); padding: 15px 0; display: flex; justify-content: center; gap: 25px; border-bottom: 2px solid var(--primary); }
+        .navbar a { color: white; text-decoration: none; text-transform: uppercase; font-weight: 800; font-size: 0.9rem; }
+        .navbar a.active { color: var(--primary); }
+        
+        .container { max-width: 600px; margin: 40px auto; padding: 0 20px; text-align: center; }
+        .video-box { width: 100%; aspect-ratio: 16/9; margin-top: 20px; border-radius: 15px; overflow: hidden; border: 2px solid var(--primary); }
+        p { line-height: 1.6; opacity: 0.9; }
     </style>
 </head>
 <body>
-    <nav>
+    <nav class="navbar">
         <a href="index.html">Domov</a>
-        <a href="o-nas.html">O nás</a>
         <a href="playlist.html">Playlist</a>
+        <a href="o-nas.html" class="active">O nás</a>
     </nav>
 
     <div class="container">
-        <h1 style="text-align: center; color: var(--primary)">O NÁS</h1>
-        <div class="post-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/DhaKFnAmBwQ" allowfullscreen></iframe>
-            </div>
-            <div style="padding: 20px;">
-                <h2>Moja návšteva v Europa 2</h2>
-                <p>Nezabudnuteľný zážitok v rádiu Europa 2!</p>
-            </div>
+        <h1>O NÁS</h1>
+        <p>Rádio Sebastian je internetové rádio, které přináší hudbu a zábavu pro všechny posluchače 24 hodin denně.</p>
+        
+        <div class="video-box">
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/DhaKFnAmBwQ" frameborder="0" allowfullscreen></iframe>
         </div>
+        <h3>Moje návštěva v Europa 2</h3>
     </div>
 </body>
 </html>
