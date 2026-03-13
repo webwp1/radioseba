@@ -2,52 +2,226 @@
 <html lang="sk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rádio Sebastián | Domov</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rádio Sebastián | Oficiálny Web</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root { --primary: #00f2ff; --bg: #0a0e17; --card: #161b26; --text: #ffffff; }
-        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
-        
-        /* NAVIGAČNÍ LIŠTA */
-        nav { background: #111827; padding: 15px; display: flex; justify-content: center; gap: 20px; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--primary); }
-        nav a { color: white; text-decoration: none; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; transition: 0.3s; padding: 5px 10px; }
-        nav a:hover { color: var(--primary); }
-        nav a.active { border-bottom: 2px solid var(--primary); color: var(--primary); }
+        :root {
+            --primary: #00f2ff;
+            --bg: #0a0e17;
+            --card: #161b26;
+            --text: #ffffff;
+            --zeno: #fb214e;
+            --nav-bg: #111827;
+        }
 
-        .hero { min-height: 50vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; }
-        .logo-text { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 900; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .launch-btn { display: inline-flex; align-items: center; gap: 15px; background: var(--primary); color: #000; padding: 20px 45px; border-radius: 50px; text-decoration: none; font-weight: 900; margin-top: 30px; box-shadow: 0 10px 30px rgba(0, 242, 255, 0.3); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; padding: 20px; }
-        .card { background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
-        footer { padding: 40px; text-align: center; opacity: 0.6; }
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex; flex-direction: column; align-items: center;
+            width: 100%;
+            padding-bottom: 80px; 
+        }
+
+        /* NOVÁ NAVIGAČNÁ LIŠTA */
+        .navbar {
+            width: 100%;
+            background: var(--nav-bg);
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 800;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            padding: 5px 10px;
+        }
+
+        .navbar a:hover, .navbar a.active {
+            color: var(--primary);
+        }
+
+        /* HERO SEKCIA */
+        .hero {
+            width: 100%; min-height: 60vh;
+            background: radial-gradient(circle at 50% 50%, #1a2333 0%, #0a0e17 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 40px 15px; text-align: center;
+        }
+
+        .logo-text {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 900; text-transform: uppercase;
+            letter-spacing: 4px; margin-bottom: 30px;
+            background: linear-gradient(to right, #fff, var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .launch-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--primary);
+            color: #000;
+            padding: 20px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 242, 255, 0.3);
+        }
+
+        .launch-btn:hover {
+            transform: translateY(-5px);
+            background: #fff;
+            box-shadow: 0 15px 40px rgba(0, 242, 255, 0.5);
+        }
+
+        /* OBSAHOVÉ SEKCIE */
+        .section-container { width: 100%; max-width: 1000px; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        
+        .card { 
+            background: var(--card); 
+            padding: 25px; 
+            border-radius: 20px; 
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        h2 { border-left: 5px solid var(--primary); padding-left: 15px; margin-bottom: 20px; font-size: 1.4rem; }
+
+        .zeno-card-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: transparent;
+            color: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid var(--zeno);
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .zeno-card-btn:hover {
+            background: var(--zeno);
+            transform: scale(1.02);
+        }
+
+        .contact-link { color: var(--primary); text-decoration: none; display: block; margin: 10px 0; }
+        .social-icons a { color: var(--text); font-size: 2.5rem; transition: 0.3s; }
+        .social-icons a:hover { color: var(--primary); }
+
+        footer { 
+            padding: 60px 20px; 
+            text-align: center; 
+            width: 100%;
+        }
+        
+        .footer-content {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        footer a { 
+            color: var(--primary); 
+            text-decoration: none; 
+            font-weight: bold;
+            border-bottom: 1px solid transparent;
+            transition: 0.3s;
+        }
+        
+        footer a:hover {
+            border-bottom: 1px solid var(--primary);
+        }
+
+        @media (max-width: 600px) {
+            .logo-text { font-size: 2.2rem; }
+            .navbar { gap: 15px; }
+            .navbar a { font-size: 0.8rem; }
+        }
     </style>
 </head>
 <body>
-    <nav>
+
+    <nav class="navbar">
         <a href="index.html" class="active">Domov</a>
-        <a href="o-nas.html">O nás</a>
         <a href="playlist.html">Playlist</a>
+        <a href="o-nas.html">O nás</a>
     </nav>
 
     <section class="hero">
         <div class="logo-text">Rádio Sebastián</div>
-        <a href="https://zeno.fm/radio/radio-sebastian/" target="_blank" class="launch-btn">
-            <i class="fas fa-play"></i> Spustiť rádio
+        
+        <a href="https://www.radiosebastian.eu/prehravac" class="launch-btn">
+            <i class="fas fa-play"></i> Spustiť prehrávač
         </a>
     </section>
 
-    <div class="grid">
-        <div class="card">
-            <h2 style="color: var(--primary)">Program</h2>
-            <p>Pondelok - Nedeľa: <strong>NONSTOP</strong></p>
-        </div>
-        <div class="card">
-            <h2 style="color: var(--primary)">Kontakt</h2>
-            <p><i class="fas fa-envelope"></i> radiosebastian565@gmail.com</p>
+    <div class="section-container">
+        <div class="grid">
+            <div class="card">
+                <h2>Nájdete nás aj na</h2>
+                <a href="https://zeno.fm/radio/radio-sebastian/" target="_blank" class="zeno-card-btn">
+                    <i class="fas fa-broadcast-tower"></i> Prejsť na Zeno.fm
+                </a>
+            </div>
+
+            <div class="card">
+                <h2>Program</h2>
+                <p>Pondelok - Nedeľa: <strong>NONSTOP</strong></p>
+                <p style="opacity: 0.7; font-size: 0.9rem;">Hráme tie najväčšie hity bez prestávky.</p>
+            </div>
         </div>
     </div>
 
-    <footer>© 2026 Rádio Sebastián</footer>
+    <div class="section-container">
+        <div class="grid">
+            <div class="card">
+                <h2>Kontakt</h2>
+                <a href="mailto:radiosebastian565@gmail.com" class="contact-link"><i class="fas fa-envelope"></i> radiosebastian565@gmail.com</a>
+                <a href="https://www.instagram.com/radiosebastian_sk" target="_blank" class="contact-link"><i class="fab fa-instagram"></i> @radiosebastian_sk</a>
+            </div>
+            <div class="card">
+                <h2>Sledujte nás</h2>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/radiosebastian_sk" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            © 2026 Rádio Sebastián • Všetky práva vyhradené<br>
+            <a href="https://sites.google.com/view/martin-weby/web" target="_blank">Tento web vytvoril Martin</a>
+        </div>
+    </footer>
+
 </body>
 </html>
