@@ -10,30 +10,59 @@
             --primary: #00f2ff;
             --bg: #0a0e17;
             --text: #ffffff;
+            --nav-bg: #111827;
         }
 
         * { box-sizing: border-box; }
 
         body, html {
             margin: 0; padding: 0;
-            width: 100%; min-height: 100%; /* Změněno z pevné height na min-height */
+            width: 100%; min-height: 100%;
             font-family: 'Inter', sans-serif;
             background-color: var(--bg);
             color: var(--text);
         }
 
         body {
-            /* Pojistka pro Google Sites mobilní zobrazení */
-            padding-bottom: 60px;
             display: flex;
             flex-direction: column;
+        }
+
+        /* SHODNÁ NAVIGAČNÍ LIŠTA */
+        .navbar {
+            width: 100%;
+            background: var(--nav-bg);
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 800;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            padding: 5px 10px;
+        }
+
+        .navbar a:hover {
+            color: var(--primary);
         }
 
         .wrapper {
             display: flex;
             flex-direction: column;
             width: 100%;
-            min-height: 100vh;
+            min-height: calc(100vh - 54px); /* Odečtení výšky lišty */
             background: radial-gradient(circle at center, #1a2333 0%, #0a0e17 100%);
         }
 
@@ -142,7 +171,6 @@
             cursor: pointer;
         }
 
-        /* UPRAVENÁ PATIČKA */
         footer {
             padding: 50px 20px;
             text-align: center;
@@ -169,20 +197,24 @@
             border-bottom: 1px solid var(--primary);
         }
 
-        .fa-play { margin-left: 5px; }
-
         @media (max-width: 600px) {
-            .player-content { padding: 30px 15px; }
-            footer { padding: 40px 20px; }
+            .navbar { gap: 15px; }
+            .navbar a { font-size: 0.8rem; }
         }
     </style>
 </head>
 <body>
 
+    <nav class="navbar">
+        <a href="index.html">Domov</a>
+        <a href="playlist.html">Playlist</a>
+        <a href="o-nas.html">O nás</a>
+    </nav>
+
     <div class="wrapper">
         <main class="player-content">
             <div class="logo-circle" id="rsLogo">
-                <img src="https://lh3.googleusercontent.com/u/0/d/1BAe4Sy78N_jHCzB5BH9JgtwN8BjBBokl" alt="Logo Rádio Sebastián">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczM_tU_658e4tE0Wj7U_K2r_y-F6B_V8W5P1k" alt="Logo Rádio Sebastián">
             </div>
 
             <div class="brand-name">Rádio Sebastián</div>
@@ -221,7 +253,7 @@
 
         playBtn.addEventListener('click', () => {
             if (audio.paused) {
-                audio.play().catch(e => console.error("Chyba pri štarte: ", e));
+                audio.play().catch(e => console.error("Chyba: ", e));
                 playIcon.className = 'fas fa-pause';
                 rsLogo.style.animationPlayState = 'running';
             } else {
